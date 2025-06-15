@@ -1,4 +1,4 @@
-import React, { use } from 'react'
+import React from 'react'
 
 export const metadata = {
     title: {
@@ -6,8 +6,12 @@ export const metadata = {
     }
 }
 
+// export async function generateStaticParams() {
+//     return [{ id: '1' }, { id: '2' }]
+// }
+
 //async and await are used in server component , to use async operation in client component we have to use use -> use() or useserver
-const MemeberDetails = async ({ params }: { params: any }) => {
+const MemeberDetails = async ({ params }: any) => {
     const data = await params;
     // const parmas = useParams(); // to use this , we have to make this component as client 
     // console.log('parmas', parmas)

@@ -5,7 +5,7 @@ import { NextRequest } from 'next/server'
 
 export async function middleware(request: NextRequest) {
     const path = request.nextUrl.pathname;
-    console.log('🔍 Middleware triggered for path:', path)
+    // console.log('🔍 Middleware triggered for path:', path)
 
     //public path -> skip
     if (publicPath.includes(path)) {
@@ -21,6 +21,7 @@ export async function middleware(request: NextRequest) {
         return NextResponse.next()
     }
 
+    return NextResponse.next()
     return NextResponse.redirect(new URL('/login', request.url))
 
 }
