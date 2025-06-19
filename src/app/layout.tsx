@@ -1,3 +1,4 @@
+import { StoreProvider } from "@/redux/StoreProvider";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -12,10 +13,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     return (
         <html lang="en">
             <body>
-                <main style={{ display: 'flex', gap: '20px' }}>
-                    <header>Sidebar</header>
-                    {children}
-                </main>
+                <StoreProvider>
+                    <main style={{ display: 'flex', gap: '20px' }}>
+                        <header>Sidebar</header>
+                        {children}
+                    </main>
+                </StoreProvider>
                 <footer>Footer</footer>
             </body>
         </html>
