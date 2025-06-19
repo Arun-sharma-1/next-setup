@@ -1,13 +1,18 @@
 'use client'
-import { someRegularFunction } from '@/constants'
-import { useDebounce } from '@/hooks/useDebounce';
-import React, { useState } from 'react'
+import { useDebounce } from '@/hooks/useDebounce'
+import { useLocalStorage } from '@/hooks/useLocalStorage'
+import React, { useEffect, useState } from 'react'
 
 const HomePage = () => {
+    const [name, setName] = useLocalStorage('name', "");
     const handleChange = (e: any) => {
         console.log('value changed')
+        setName(e.target.value)
     }
-    const handleDebounceChange: any = useDebounce(handleChange, 300)
+    useEffect(() => {
+        console.log('name', name)
+    }, [name])
+    const handleDebounceChange: any = useDebounce(handleChange, 2000)
     return (
         <div>
             <input name='name' onChange={handleDebounceChange} placeholder='Enter name' />

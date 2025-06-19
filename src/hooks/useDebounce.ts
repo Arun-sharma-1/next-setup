@@ -1,12 +1,13 @@
-// utils/debounce.ts
-export function useDebounce(func: any, delay: number) {
-    let timer: number | null = null;
+import { useRef } from "react";
 
-    return (...args: any) => {
-        console.log('args ', args)
-        if (timer) clearTimeout(timer);
-        timer = window.setTimeout(() => {
-            func(...args);
-        }, delay);
-    };
+export function useDebounce<T extends (...args: any[]) => void>(func: T, delay: number) {
+    //why ref ?? -> hooks enter in react lifecycle -> closure or state refresh
+    const timeoutRef = useRef<ReturnType<typeof setTimeout>>(undefined);
+
+    return (...args: Parameters<T>) => {
+        if (timeoutRef.current) {
+            clearTimeout(timeoutRef.current)
+        }
+        timeoutRef.current = setTimeout(() => { func(...args) }, delay)
+    }
 }
