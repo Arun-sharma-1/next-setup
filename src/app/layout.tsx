@@ -1,6 +1,7 @@
 import { StoreProvider } from "@/redux/StoreProvider";
+import TopLayout from "@/shared/layout/layout";
 import { Metadata } from "next";
-
+import './globals.css'
 export const metadata: Metadata = {
     title: {
         default: "Next.js",
@@ -12,15 +13,13 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
         <html lang="en">
-            <body>
-                <StoreProvider>
-                    <main style={{ display: 'flex', gap: '20px' }}>
-                        <header>Sidebar</header>
-                        {children}
+            <StoreProvider>
+                <body>
+                    <main className="bg-red">
+                        <TopLayout>{children}</TopLayout>
                     </main>
-                </StoreProvider>
-                <footer>Footer</footer>
-            </body>
+                </body>
+            </StoreProvider>
         </html>
     )
 }

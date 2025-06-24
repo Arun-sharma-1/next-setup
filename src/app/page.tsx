@@ -6,8 +6,11 @@ import React, { useEffect, useState } from 'react'
 import { updateCount } from '@/redux/slices/counter'
 import Link from 'next/link'
 import { fetchUser } from '@/redux/slices/user'
+import useWindowsize from '@/hooks/useWindowsize'
 const HomePage = () => {
     const [name, setName] = useLocalStorage('name', "");
+    const [height, width] = useWindowsize();
+    console.log('height width',height , width)
     const counterData = useAppSelector((state) => state.counter);
     const userData = useAppSelector((state) => state.user);
     console.log('userData', userData)
