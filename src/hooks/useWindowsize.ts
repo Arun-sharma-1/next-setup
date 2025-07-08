@@ -1,24 +1,29 @@
-'use client'
-import React, { useEffect, useState } from 'react'
+'use client';
+import { useEffect, useState } from 'react';
 
-const useWindowsize = () => {
-    const [windowSize, setwindowSize] = useState({
-        windowHeight: window.innerHeight,
-        windowWidth: window.innerWidth
-    })
+const useWindowSize = () => {
+  const [windowSize, setWindowSize] = useState({
+    windowHeight: 0,
+    windowWidth: 0,
+  });
+
+  useEffect(() => {
     const updateWindowSize = () => {
-        setwindowSize({
-            windowHeight: window.innerHeight,
-            windowWidth: window.innerWidth
-        })
+      setWindowSize({
+        windowHeight: window.innerHeight,
+        windowWidth: window.innerWidth,
+      });
+    };
+
+    // Check if window exists (for SSR safety)
+    if (typeof window !== 'undefined') {
+      updateWindowSize();
+      window.addEventListener('resize', updateWindowSize);
+      return () => window.removeEventListener('resize', updateWindowSize);
     }
-    useEffect(() => {
-        document.addEventListener('resize', updateWindowSize);
+  }, []);
 
-        return () => { document.removeEventListener('resize', updateWindowSize) }
-    }, [windowSize.windowHeight ,windowSize.windowWidth])
+  return [windowSize.windowHeight, windowSize.windowWidth];
+};
 
-    return [windowSize.windowHeight, windowSize.windowWidth];
-}
-
-export default useWindowsize
+export default useWindowSize;

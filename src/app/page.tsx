@@ -7,6 +7,7 @@ import { updateCount } from '@/redux/slices/counter'
 import Link from 'next/link'
 import { fetchUser } from '@/redux/slices/user'
 import useWindowsize from '@/hooks/useWindowsize'
+import { useThrottle } from '@/hooks/useThrottle'
 const HomePage = () => {
     const [name, setName] = useLocalStorage('name', "");
     const [height, width] = useWindowsize();
@@ -29,11 +30,15 @@ const HomePage = () => {
         dispatch(fetchUser())
     }, [])
     const handleDebounceChange: any = useDebounce(handleChange, 1000)
+    const fnHandler = () => {
+        console.log('button clicked..')
+    }
     return (
         <div>
             <input name='name' onChange={handleDebounceChange} placeholder='Enter name' />
             <div>Count value : {counterData?.count}</div>
             <Link href={'/member/12'}>Member dynamic path</Link>
+            <button onClick={useThrottle(fnHandler,5000)}>click here</button>
         </div>
     )
 }
